@@ -27,6 +27,20 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
+--
+-- Name: hstore; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS hstore WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION hstore; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION hstore IS 'data type for storing sets of (key, value) pairs';
+
+
 SET search_path = public, pg_catalog;
 
 --
@@ -127,7 +141,9 @@ CREATE TABLE users (
     id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    education education
+    education education,
+    book_inventory hstore,
+    preferences jsonb DEFAULT '{}'::jsonb NOT NULL
 );
 
 
@@ -196,6 +212,13 @@ ALTER TABLE ONLY users
 
 
 --
+-- Name: index_users_on_preferences; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_users_on_preferences ON users USING gin (preferences);
+
+
+--
 -- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -217,4 +240,10 @@ INSERT INTO schema_migrations (version) VALUES ('20160417204322');
 INSERT INTO schema_migrations (version) VALUES ('20160419015909');
 
 INSERT INTO schema_migrations (version) VALUES ('20160419230746');
+
+INSERT INTO schema_migrations (version) VALUES ('20160515172804');
+
+INSERT INTO schema_migrations (version) VALUES ('20160515172955');
+
+INSERT INTO schema_migrations (version) VALUES ('20160515173322');
 
