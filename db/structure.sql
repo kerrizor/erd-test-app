@@ -141,7 +141,8 @@ CREATE TABLE users (
     id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    education education
+    education education,
+    book_inventory hstore
 );
 
 
@@ -233,4 +234,6 @@ INSERT INTO schema_migrations (version) VALUES ('20160419015909');
 INSERT INTO schema_migrations (version) VALUES ('20160419230746');
 
 INSERT INTO schema_migrations (version) VALUES ('20160515172804');
+
+INSERT INTO schema_migrations (version) VALUES ('20160515172955');
 
