@@ -142,7 +142,8 @@ CREATE TABLE users (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     education education,
-    book_inventory hstore
+    book_inventory hstore,
+    preferences jsonb DEFAULT '{}'::jsonb NOT NULL
 );
 
 
@@ -211,6 +212,13 @@ ALTER TABLE ONLY users
 
 
 --
+-- Name: index_users_on_preferences; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_users_on_preferences ON users USING gin (preferences);
+
+
+--
 -- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -236,4 +244,6 @@ INSERT INTO schema_migrations (version) VALUES ('20160419230746');
 INSERT INTO schema_migrations (version) VALUES ('20160515172804');
 
 INSERT INTO schema_migrations (version) VALUES ('20160515172955');
+
+INSERT INTO schema_migrations (version) VALUES ('20160515173322');
 
